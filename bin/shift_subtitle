@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+
+require 'getoptlong'
+require 'subtitle_shifter'
+#shift_subtitle --operation add --time 02,110 input_file output_file
+
+opts = GetoptLong.new(
+  ['--help',      '-h', GetoptLong::NO_ARGUMENT],
+  ['--operation', '-o', GetoptLong::REQUIRED_ARGUMENT],
+  ['--index',     '-i', GetoptLong::REQUIRED_ARGUMENT],
+  ['--time',      '-t', GetoptLong::REQUIRED_ARGUMENT],
+)
+
+operation = 'add'
+index     = 1
+time      = 0
+
+opts.each do |opt, arg|
+  case opt
+    when '--help'
+      puts <<-EOF
+shift_subtitle [REQUIRED ARGUMENTS] input_file output_file
+
+-h, --help:
+   show this help
+
+--operation [add|sub], -o [add|sub]:
+   either add time to or subtract time from subtitles
+
+--index [index], -i [index]:
+  choose from which index to start the operation
+
+--time [time], -t [time]:
+  the amount of time shifted e.g. 10,500 - 10 seconds, 500 ms.
+
+      EOF
+
+      exit 0
+    when '--operation'
+      operation = (['add', 'sub'].index(arg)) ? arg : 'add'
+    when '--index'
+      index = arg.to_i
+    when '--time'
+      time_parts = arg.split(',')
+      time       = (time_parts[0].to_i * 1000) + time_parts[1].to_i
+  end
+end
+
+if ARGV.length != 2
+  puts "Input and output files appear to be missing (try --help)"
+  exit 0
+end
+
+input  = ARGV.shift
+output = ARGV.shift
+time   = -time if operation.eql? 'sub' # Subtracting time works with negative numbers
+
+subtitles = SubtitleShifter.new(input)
+subtitles.shift(index: index, time: time)
+
+puts subtitles
+
+#puts "op = -#{operation}-, index = -#{index}-, time = -#{time}-, input = -#{input}-, output = -#{output}-"

@@ -1,6 +1,6 @@
 = subtitle_shifter
 
-Description goes here.
+A simple little gem for modifying SubRip subtitle files. Done as a mentoring exercise with Citizen428, and taken from the Ruby Programming Challenge For Newbies
 
 == Contributing to subtitle_shifter
  
