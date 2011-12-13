@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{subtitle_shifter}
-  s.version = "1.0.0.0"
+  s.version = "1.1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Gabriel Fortuna}]
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "bin/shift_subtitle",
     "lib/.subtitle_shifter.rb.swp",
     "lib/subtitle_shifter.rb",
+    "subtitle_shifter.gemspec",
     "test/The.Big.Bang.Theory.srt",
     "test/helper.rb",
     "test/subtitle_shifter_spec.rb"
